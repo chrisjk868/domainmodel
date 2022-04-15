@@ -176,13 +176,12 @@ public class Person {
 public class Family {
     var members : [Person] = []
     
-    init!(spouse1 : Person, spouse2 : Person) {
-        guard spouse1.spouse == nil && spouse2.spouse == nil else {
-            return nil
+    init(spouse1 : Person, spouse2 : Person) {
+        if spouse1.spouse == nil && spouse2.spouse == nil {
+            self.members.append(contentsOf: [spouse1, spouse2])
+            spouse1.spouse = spouse2
+            spouse2.spouse = spouse1
         }
-        self.members.append(contentsOf: [spouse1, spouse2])
-        spouse1.spouse = spouse2
-        spouse2.spouse = spouse1
     }
     
     func haveChild(_ child : Person) -> Bool {
